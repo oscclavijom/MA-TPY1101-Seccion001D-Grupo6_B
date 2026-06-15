@@ -80,6 +80,10 @@ public class PagoController {
 
             WebpayPlusTransactionCommitResponse response = getTransaction().commit(token_ws);
 
+            System.out.println("TOKEN RECIBIDO: " + token_ws);
+            System.out.println("STATUS WEBPAY: " + response.getStatus());
+	    System.out.println("RESPONSE COMPLETO: " + response.toString());
+
             Sesion sesion = sesionRepository.findAll().stream()
                     .filter(s -> token_ws.equals(s.getTokenWebpay()))
                     .findFirst()
