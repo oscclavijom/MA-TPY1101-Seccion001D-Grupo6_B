@@ -17,11 +17,20 @@ public class DisponibilidadTarotistaService {
     private final TarotistaRepository tarotistaRepository;
 
     public void crearDisponibilidad(
-            Integer tarotistaId,
-            String dia,
-            String horaInicio,
-            String horaFin
-    ) {
+        Integer tarotistaId,
+        String dia,
+        String horaInicio,
+        String horaFin
+        ) {
+
+        LocalTime inicio = LocalTime.parse(horaInicio);
+        LocalTime fin = LocalTime.parse(horaFin);
+
+        if (!fin.isAfter(inicio)) {
+                throw new RuntimeException(
+                        "La hora de fin debe ser mayor que la hora de inicio"
+                );
+        }
 
         Tarotista tarotista = tarotistaRepository.findById(tarotistaId)
                 .orElseThrow();
@@ -30,11 +39,11 @@ public class DisponibilidadTarotistaService {
                 DisponibilidadTarotista.builder()
                         .tarotista(tarotista)
                         .diaSemana(dia)
-                        .horaInicio(LocalTime.parse(horaInicio))
-                        .horaFin(LocalTime.parse(horaFin))
+                        .horaInicio(inicio)
+                        .horaFin(fin)
                         .activa(true)
                         .build();
 
         repository.save(disponibilidad);
-    }
+        }
 }

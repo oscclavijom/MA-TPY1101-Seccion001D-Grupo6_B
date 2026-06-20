@@ -116,6 +116,24 @@ class RegistroTarotistaActivity : AppCompatActivity() {
             val horaInicio = etHoraInicio.text.toString().trim()
             val horaFin = etHoraFin.text.toString().trim()
 
+            val inicio =
+                java.time.LocalTime.parse(horaInicio)
+
+            val fin =
+                java.time.LocalTime.parse(horaFin)
+
+            if (!fin.isAfter(inicio)) {
+
+                tvResultado.text =
+                    "La hora de fin debe ser mayor que la hora de inicio"
+
+                tvResultado.setTextColor(
+                    getColor(android.R.color.holo_red_light)
+                )
+
+                return@setOnClickListener
+            }
+
             if (horaInicio.isEmpty() || horaFin.isEmpty()) {
 
                 tvResultado.text = "Selecciona horario de atención"
