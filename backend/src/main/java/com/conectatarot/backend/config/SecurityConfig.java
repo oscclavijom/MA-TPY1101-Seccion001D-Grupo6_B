@@ -50,6 +50,7 @@ public class SecurityConfig {
 		       		 "/api/usuarios",
 				 "/api/pagos/**",
                                  "/api/tarotistas/**"
+                                 "/api/resenas/**"
                 )
                         .permitAll()
                         .anyRequest()

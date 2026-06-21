@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 💡 Enlazamos los elementos de la interfaz clásica
         val etEmail = findViewById<EditText>(R.id.etEmail)
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val btnLogin = findViewById<Button>(R.id.btnLogin)
@@ -23,9 +22,7 @@ class MainActivity : AppCompatActivity() {
         val tvIrRegistro = findViewById<TextView>(R.id.tvIrRegistro)
         val tvIrRegistroTarotista = findViewById<TextView>(R.id.tvIrRegistroTarotista)
 
-        // 💡 Nota: Puedes dejar el botón 'btnGoogleLogin' en el XML pero oculto o borrarlo si gustas.
-        // Si arroja error por faltar la variable, descomenta la siguiente línea para que no falle:
-        // val btnGoogleLogin = findViewById<Button>(R.id.btnGoogleLogin)
+
 
         tvIrRegistro.setOnClickListener {
             startActivity(Intent(this, RegistroActivity::class.java))

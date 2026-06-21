@@ -72,17 +72,7 @@
         android:backgroundTint="#7d3cae"
         android:layout_marginBottom="16dp"/>
 
-    <Button
-        android:id="@+id/btnGoogleLogin"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:text="🔍 Continuar con Google"
-        android:textColor="#ffffff"
-        android:backgroundTint="#DB4437"
-        android:textSize="15sp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"/>
+
 
     <TextView
         android:id="@+id/tvError"
