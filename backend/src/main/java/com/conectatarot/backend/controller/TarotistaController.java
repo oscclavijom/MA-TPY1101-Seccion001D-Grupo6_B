@@ -42,57 +42,10 @@ public class TarotistaController {
 
 
     @PostMapping("/registro")
-        public ResponseEntity<?> registrarTarotista(
-                @RequestBody RegistroTarotistaRequest request
-        ) {
-
-        Usuario usuario = new Usuario();
-                usuario.setNombre(request.getNombre());
-                usuario.setEmail(request.getEmail());
-                usuario.setPassword(request.getPassword());
-
-        usuario = usuarioService.registrarUsuario(usuario);
-
-        Tarotista tarotista = tarotistaService.crearTarotista(
-                usuario.getIdUsuario(),
-                request.getNombreProfesional()
-        );
-
-        tarotista = tarotistaService.actualizarPerfil(
-                tarotista.getId(),
-                usuario.getEmail(),
-                request.getDescripcion(),
-                request.getPrecioBase()
-        );
-
-        usuario.setRol(
-                rolRepository.findByNombreRol("TAROTISTA")
-                        .orElseThrow()
-        );
-
-        usuarioRepository.save(usuario);
-
-        for(Integer especialidadId : request.getEspecialidades()) {
-
-                tarotistaEspecialidadService.agregarEspecialidad(
-                        tarotista.getId(),
-                        especialidadId
-                );
-        }
-
-        if(request.getDisponibilidades() != null) {
-
-        for(var d : request.getDisponibilidades()) {
-
-                disponibilidadTarotistaService.crearDisponibilidad(
-                        tarotista.getId(),
-                        d.getDiaSemana(),
-                        d.getHoraInicio(),
-                        d.getHoraFin()
-                );
-        }
-        }
-        
+    public ResponseEntity<?> registrarTarotista(
+            @RequestBody RegistroTarotistaRequest request
+    ) {
+        tarotistaService.registrarTarotistaCompleto(request);
 
         return ResponseEntity.ok(
                 Map.of(
@@ -100,7 +53,7 @@ public class TarotistaController {
                         "message", "Tarotista registrado correctamente"
                 )
         );
-        }
+    }
 
     @PostMapping
     public ResponseEntity<ApiResponse<Tarotista>> crearTarotista(

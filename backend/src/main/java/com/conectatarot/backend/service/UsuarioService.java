@@ -45,6 +45,25 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
+    public Usuario registrarUsuarioConRol(Usuario usuario, String nombreRol) {
+
+        Optional<Usuario> existente = usuarioRepository.findByEmail(usuario.getEmail());
+
+        if (existente.isPresent()) {
+            throw new RuntimeException("El email ya está registrado");
+        }
+
+        Rol rol = rolRepository.findByNombreRol(nombreRol)
+                .orElseThrow(() -> new RuntimeException("Rol " + nombreRol + " no encontrado"));
+
+        usuario.setRol(rol);
+        usuario.setActivo(true);
+        usuario.setFechaRegistro(LocalDateTime.now());
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+
+        return usuarioRepository.save(usuario);
+    }
+
     public Usuario actualizarUsuario(Integer id, String nombre, String email) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));

@@ -1,12 +1,15 @@
 package com.conectatarot.backend.service;
 
+import com.conectatarot.backend.dto.RegistroTarotistaRequest;
 import com.conectatarot.backend.dto.TarotistaResponseDTO;
 import com.conectatarot.backend.entity.Tarotista;
 import com.conectatarot.backend.entity.Usuario;
+import com.conectatarot.backend.repository.RolRepository;
 import com.conectatarot.backend.repository.TarotistaRepository;
 import com.conectatarot.backend.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -17,6 +20,10 @@ public class TarotistaService {
 
     private final TarotistaRepository tarotistaRepository;
     private final UsuarioRepository usuarioRepository;
+    private final UsuarioService usuarioService;
+    private final RolRepository rolRepository;
+    private final TarotistaEspecialidadService tarotistaEspecialidadService;
+    private final DisponibilidadTarotistaService disponibilidadTarotistaService;
 
     public Tarotista crearTarotista(Integer usuarioId, String nombreProfesional) {
 
@@ -97,5 +104,45 @@ public class TarotistaService {
                                 .toList()
                 )
                 .build();
+    }
+
+    @Transactional
+    public void registrarTarotistaCompleto(RegistroTarotistaRequest request) {
+        Usuario usuario = new Usuario();
+        usuario.setNombre(request.getNombre());
+        usuario.setEmail(request.getEmail());
+        usuario.setPassword(request.getPassword());
+
+        usuario = usuarioService.registrarUsuarioConRol(usuario, "TAROTISTA");
+
+        Tarotista tarotista = crearTarotista(
+                usuario.getIdUsuario(),
+                request.getNombreProfesional()
+        );
+
+        actualizarPerfil(
+                tarotista.getId(),
+                usuario.getEmail(),
+                request.getDescripcion(),
+                request.getPrecioBase()
+        );
+
+        for (Integer especialidadId : request.getEspecialidades()) {
+            tarotistaEspecialidadService.agregarEspecialidad(
+                    tarotista.getId(),
+                    especialidadId
+            );
+        }
+
+        if (request.getDisponibilidades() != null) {
+            for (var d : request.getDisponibilidades()) {
+                disponibilidadTarotistaService.crearDisponibilidad(
+                        tarotista.getId(),
+                        d.getDiaSemana(),
+                        d.getHoraInicio(),
+                        d.getHoraFin()
+                );
+            }
+        }
     }
 }
