@@ -59,6 +59,18 @@ public class SesionController {
         );
     }
 
+    @GetMapping("/mis-pagos")
+    public ResponseEntity<ApiResponse<List<SesionResponseDTO>>> obtenerMisPagos(
+            Authentication authentication
+    ) {
+        List<SesionResponseDTO> pagos =
+                sesionService.obtenerMisPagos(authentication.getName());
+
+        return ResponseEntity.ok(
+                ApiResponse.ok("Pagos obtenidos correctamente", pagos)
+        );
+    }
+
     @GetMapping("/tarotista")
     public ResponseEntity<ApiResponse<PageResponse<SesionResponseDTO>>> obtenerSesionesTarotista(
             Authentication authentication,

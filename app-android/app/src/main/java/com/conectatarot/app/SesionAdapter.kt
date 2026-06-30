@@ -28,36 +28,6 @@ class SesionAdapter(
         val tvVideollamadaInfo: TextView = view.findViewById(R.id.tvVideollamadaInfo)
     }
 
-    private fun sesionCompletada(s: SesionItem): Boolean {
-        if (s.estado != "CONFIRMADA") return false
-        return try {
-            val fechaSesion = java.time.LocalDateTime.parse(s.fecha)
-            val fin = fechaSesion.plusMinutes(s.duracionMinutos.toLong())
-            fin.isBefore(java.time.LocalDateTime.now())
-        } catch (e: Exception) {
-            false
-        }
-    }
-
-    private fun ventanaVideollamada(s: SesionItem): Boolean {
-        if (s.estado != "CONFIRMADA" || s.estadoPago != "PAGADO") return false
-        return try {
-            val fechaSesion = java.time.LocalDateTime.parse(s.fecha)
-            val inicio = fechaSesion.minusMinutes(15)
-            val fin = fechaSesion.plusMinutes(s.duracionMinutos.toLong())
-            val ahora = java.time.LocalDateTime.now()
-            ahora.isAfter(inicio) && ahora.isBefore(fin)
-        } catch (e: Exception) { false }
-    }
-
-    private fun esSesionFutura(s: SesionItem): Boolean {
-        if (s.estado != "CONFIRMADA") return false
-        return try {
-            val fechaSesion = java.time.LocalDateTime.parse(s.fecha)
-            fechaSesion.isAfter(java.time.LocalDateTime.now())
-        } catch (e: Exception) { false }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_sesion, parent, false)
@@ -71,7 +41,7 @@ class SesionAdapter(
         holder.tvPrecio.text = "$ ${s.precioTotal.toInt()}"
 
         val (color, texto) = when {
-            sesionCompletada(s) -> Pair("#3498db", "✔ Completada")
+            com.conectatarot.app.sesionCompletada(s) -> Pair("#3498db", "✔ Completada")
             s.estado == "PENDIENTE" && s.estadoPago == "PAGADO" -> Pair("#27ae60", "✅ Pagado")
             s.estado == "PENDIENTE" -> Pair("#f39c12", "⏳ Pendiente")
             s.estado == "CONFIRMADA" -> Pair("#27ae60", "✅ Confirmada")
@@ -101,7 +71,7 @@ class SesionAdapter(
                 holder.btnPagar.visibility = View.GONE
             }
 
-            sesionCompletada(s) -> {
+            com.conectatarot.app.sesionCompletada(s) -> {
                 holder.btnCancelar.visibility = View.VISIBLE
                 holder.btnCancelar.text = "⭐ Calificar"
                 holder.btnCancelar.isEnabled = true
@@ -117,16 +87,14 @@ class SesionAdapter(
             }
         }
         when {
-            ventanaVideollamada(s) -> {
+            com.conectatarot.app.ventanaVideollamada(s, 0) -> {
                 holder.btnVideollamada.visibility = View.VISIBLE
                 holder.tvVideollamadaInfo.visibility = View.GONE
                 holder.btnVideollamada.setOnClickListener {
-                    val url = "https://meet.jit.si/ConectaTarot-Sesion${s.id}"
-                    val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(url))
-                    holder.itemView.context.startActivity(intent)
+                    abrirVideollamada(holder.itemView.context, s.id)
                 }
             }
-            esSesionFutura(s) && s.estadoPago == "PAGADO" -> {
+            com.conectatarot.app.esSesionFutura(s) && s.estadoPago == "PAGADO" -> {
                 holder.btnVideollamada.visibility = View.GONE
                 holder.tvVideollamadaInfo.visibility = View.VISIBLE
             }

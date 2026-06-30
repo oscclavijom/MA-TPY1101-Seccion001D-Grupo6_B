@@ -33,6 +33,11 @@ interface ApiService {
         @Header("Authorization") token: String
     ): Response<SesionClienteResponse>
 
+    @GET("api/sesiones/mis-pagos")
+    suspend fun getMisPagos(
+        @Header("Authorization") token: String
+    ): Response<SesionClienteResponse>
+
     @PUT("api/sesiones/{id}/cancelar")
     suspend fun cancelarSesion(
         @Header("Authorization") token: String,

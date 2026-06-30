@@ -86,6 +86,28 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/btnVideollamadaAgenda"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="📹 Unirse a videollamada"
+            android:textColor="#ffffff"
+            android:backgroundTint="#3498db"
+            android:textSize="13sp"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tvVideollamadaInfoAgenda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="📹 La videollamada estará disponible 15 min antes de tu sesión"
+            android:textColor="#9b59b6"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"/>
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

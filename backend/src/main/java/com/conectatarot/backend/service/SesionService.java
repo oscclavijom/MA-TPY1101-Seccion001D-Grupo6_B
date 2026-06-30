@@ -104,6 +104,14 @@ public class SesionService {
                 .collect(Collectors.toList());
     }
 
+    public List<SesionResponseDTO> obtenerMisPagos(String email) {
+        return sesionRepository.findByUsuario_Email(email)
+                .stream()
+                .filter(s -> "PAGADO".equals(s.getEstadoPago()))
+                .map(this::convertirADTO)
+                .collect(Collectors.toList());
+    }
+
     public List<SesionResponseDTO> obtenerSesionesTarotista(String email) {
         return sesionRepository.findByTarotista_Usuario_EmailOrderByFechaAsc(email)
                 .stream()

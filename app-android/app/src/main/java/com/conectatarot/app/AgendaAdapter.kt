@@ -21,6 +21,8 @@ class AgendaAdapter(
         val tvPrecio: TextView = view.findViewById(R.id.tvAgendaPrecio)
         val btnConfirmar: Button = view.findViewById(R.id.btnConfirmarAgenda)
         val btnRechazar: Button = view.findViewById(R.id.btnRechazarAgenda)
+        val btnVideollamada: Button = view.findViewById(R.id.btnVideollamadaAgenda)
+        val tvVideollamadaInfo: TextView = view.findViewById(R.id.tvVideollamadaInfoAgenda)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -53,6 +55,24 @@ class AgendaAdapter(
         } else {
             holder.btnConfirmar.visibility = View.GONE
             holder.btnRechazar.visibility = View.GONE
+        }
+
+        when {
+            com.conectatarot.app.ventanaVideollamada(s, 15) -> {
+                holder.btnVideollamada.visibility = View.VISIBLE
+                holder.tvVideollamadaInfo.visibility = View.GONE
+                holder.btnVideollamada.setOnClickListener {
+                    abrirVideollamada(holder.itemView.context, s.id)
+                }
+            }
+            com.conectatarot.app.esSesionFutura(s) && s.estadoPago == "PAGADO" -> {
+                holder.btnVideollamada.visibility = View.GONE
+                holder.tvVideollamadaInfo.visibility = View.VISIBLE
+            }
+            else -> {
+                holder.btnVideollamada.visibility = View.GONE
+                holder.tvVideollamadaInfo.visibility = View.GONE
+            }
         }
     }
 

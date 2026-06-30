@@ -31,6 +31,7 @@
         <activity android:name=".AgendarActivity" />
         <activity android:name=".MisSesionesActivity" />
         <activity android:name=".HistorialSesionesActivity" />
+        <activity android:name=".HistorialPagosActivity" />
         <activity android:name=".TarotistaHomeActivity" />
         <activity android:name=".RegistroActivity" />
         <activity android:name=".RegistroTarotistaActivity" />

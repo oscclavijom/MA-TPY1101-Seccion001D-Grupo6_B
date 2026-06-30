@@ -53,6 +53,10 @@ class ClienteActivity : AppCompatActivity() {
                     startActivity(Intent(this, HistorialSesionesActivity::class.java))
                     false
                 }
+                R.id.nav_pagos -> {
+                    startActivity(Intent(this, HistorialPagosActivity::class.java))
+                    false
+                }
                 R.id.nav_perfil -> {
                     startActivity(Intent(this, PerfilActivity::class.java))
                     false
