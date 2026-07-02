@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.conectatarot.app.network.RetrofitClient
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 import android.widget.LinearLayout
 import android.content.Intent
@@ -23,8 +24,12 @@ class MisSesionesActivity : AppCompatActivity() {
         val rvSesiones = findViewById<RecyclerView>(R.id.rvSesiones)
         val tvVolver = findViewById<TextView>(R.id.tvVolverSesiones)
         val tvEmpty = findViewById<TextView>(R.id.tvEmptySesiones)
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
 
         rvSesiones.layoutManager = LinearLayoutManager(this)
+
+        setupClienteBottomNavigation(bottomNav)
+        bottomNav.selectedItemId = R.id.nav_sesiones
 
         tvVolver.setOnClickListener { finish() }
 

@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.conectatarot.app.network.RetrofitClient
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 
 class HistorialSesionesActivity : AppCompatActivity() {
@@ -21,8 +22,12 @@ class HistorialSesionesActivity : AppCompatActivity() {
         val rvSesiones = findViewById<RecyclerView>(R.id.rvHistorialSesiones)
         val tvVolver = findViewById<TextView>(R.id.tvVolverHistorialSesiones)
         val tvEmpty = findViewById<TextView>(R.id.tvEmptyHistorialSesiones)
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
 
         rvSesiones.layoutManager = LinearLayoutManager(this)
+
+        setupClienteBottomNavigation(bottomNav)
+        bottomNav.selectedItemId = R.id.nav_historial
 
         tvVolver.setOnClickListener { finish() }
 

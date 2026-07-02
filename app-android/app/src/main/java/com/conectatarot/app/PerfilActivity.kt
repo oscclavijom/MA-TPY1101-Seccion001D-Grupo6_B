@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.conectatarot.app.network.EditarPerfilRequest
 import com.conectatarot.app.network.RetrofitClient
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 
 class PerfilActivity : AppCompatActivity() {
@@ -24,9 +25,13 @@ class PerfilActivity : AppCompatActivity() {
         val btnGuardar = findViewById<Button>(R.id.btnGuardarPerfil)
         val tvResultado = findViewById<TextView>(R.id.tvResultadoPerfil)
         val tvVolver = findViewById<TextView>(R.id.tvVolverPerfil)
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
 
         etNombre.setText(nombreActual)
         etEmail.setText(prefs.getString("email", "") ?: "")
+
+        setupClienteBottomNavigation(bottomNav)
+        bottomNav.selectedItemId = R.id.nav_perfil
 
         tvVolver.setOnClickListener { finish() }
 

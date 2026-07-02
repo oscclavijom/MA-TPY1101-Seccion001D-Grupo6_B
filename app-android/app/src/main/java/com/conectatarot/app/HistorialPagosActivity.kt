@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.conectatarot.app.network.RetrofitClient
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 
 class HistorialPagosActivity : AppCompatActivity() {
@@ -21,8 +22,12 @@ class HistorialPagosActivity : AppCompatActivity() {
         val rvPagos = findViewById<RecyclerView>(R.id.rvHistorialPagos)
         val tvVolver = findViewById<TextView>(R.id.tvVolverHistorialPagos)
         val tvEmpty = findViewById<TextView>(R.id.tvEmptyHistorialPagos)
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
 
         rvPagos.layoutManager = LinearLayoutManager(this)
+
+        setupClienteBottomNavigation(bottomNav)
+        bottomNav.selectedItemId = R.id.nav_pagos
 
         tvVolver.setOnClickListener { finish() }
 

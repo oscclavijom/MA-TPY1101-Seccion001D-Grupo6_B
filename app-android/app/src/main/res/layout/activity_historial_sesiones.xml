@@ -38,7 +38,18 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvHistorialSesiones"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:padding="8dp"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#2d1654"
+        app:itemIconTint="#d4aaff"
+        app:itemTextColor="#d4aaff"
+        app:menu="@menu/bottom_nav_menu"
+        xmlns:app="http://schemas.android.com/apk/res-auto"/>
 
 </LinearLayout>
