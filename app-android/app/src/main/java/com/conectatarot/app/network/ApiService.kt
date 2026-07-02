@@ -290,7 +290,9 @@ data class EditarPerfilRequest(
 data class EditarPerfilTarotistaRequest(
     val nombreProfesional: String,
     val descripcion: String,
-    val precioBase: Double
+    val precioBase: Double,
+    val especialidades: List<Int>? = null,
+    val disponibilidades: List<DisponibilidadRequest>? = null
 )
 
 data class ResenaRequest(

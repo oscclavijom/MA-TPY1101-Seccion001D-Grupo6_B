@@ -86,11 +86,14 @@ public class TarotistaController {
             @Valid @RequestBody PerfilTarotistaDTO request,
             Authentication authentication
     ) {
-        Tarotista tarotista = tarotistaService.actualizarPerfil(
+        Tarotista tarotista = tarotistaService.actualizarPerfilCompleto(
                 id,
                 authentication.getName(),
+                request.getNombreProfesional(),
                 request.getDescripcion(),
-                request.getPrecioBase()
+                request.getPrecioBase(),
+                request.getEspecialidades(),
+                request.getDisponibilidades()
         );
 
         return ResponseEntity.ok(

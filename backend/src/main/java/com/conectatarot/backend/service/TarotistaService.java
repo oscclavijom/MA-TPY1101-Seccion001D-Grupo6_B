@@ -1,5 +1,6 @@
 package com.conectatarot.backend.service;
 
+import com.conectatarot.backend.dto.DisponibilidadRequestDTO;
 import com.conectatarot.backend.dto.RegistroTarotistaRequest;
 import com.conectatarot.backend.dto.TarotistaResponseDTO;
 import com.conectatarot.backend.entity.Tarotista;
@@ -67,6 +68,49 @@ public class TarotistaService {
 
         tarotista.setDescripcion(descripcion);
         tarotista.setPrecioBase(precioBase);
+
+        return tarotistaRepository.save(tarotista);
+    }
+
+    public Tarotista actualizarPerfilCompleto(
+            Integer tarotistaId,
+            String emailUsuarioLogueado,
+            String nombreProfesional,
+            String descripcion,
+            BigDecimal precioBase,
+            List<Integer> especialidades,
+            List<DisponibilidadRequestDTO> disponibilidades
+    ) {
+        Tarotista tarotista = tarotistaRepository.findById(tarotistaId)
+                .orElseThrow(() -> new RuntimeException("Tarotista no encontrado"));
+
+        if (!tarotista.getUsuario().getEmail().equals(emailUsuarioLogueado)) {
+            throw new RuntimeException("No tienes permiso para editar este perfil");
+        }
+
+        if (nombreProfesional == null || nombreProfesional.isBlank()) {
+            throw new RuntimeException("El nombre profesional es obligatorio");
+        }
+
+        if (descripcion == null || descripcion.length() < 20) {
+            throw new RuntimeException("La descripción debe tener al menos 20 caracteres");
+        }
+
+        if (precioBase == null || precioBase.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new RuntimeException("El precio base debe ser mayor a 0");
+        }
+
+        tarotista.setNombreProfesional(nombreProfesional);
+        tarotista.setDescripcion(descripcion);
+        tarotista.setPrecioBase(precioBase);
+
+        if (especialidades != null && !especialidades.isEmpty()) {
+            tarotistaEspecialidadService.reemplazarEspecialidades(tarotistaId, especialidades);
+        }
+
+        if (disponibilidades != null && !disponibilidades.isEmpty()) {
+            disponibilidadTarotistaService.reemplazarDisponibilidades(tarotistaId, disponibilidades);
+        }
 
         return tarotistaRepository.save(tarotista);
     }
