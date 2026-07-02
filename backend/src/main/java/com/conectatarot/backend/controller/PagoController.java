@@ -43,6 +43,10 @@ public class PagoController {
             Sesion sesion = sesionRepository.findById(sesionId)
                     .orElseThrow(() -> new RuntimeException("Sesion no encontrada"));
 
+            if (!sesion.getFecha().isAfter(java.time.LocalDateTime.now())) {
+                throw new RuntimeException("No es posible pagar una sesión cuyo horario ya pasó");
+            }
+
             String buyOrder = "orden" + sesion.getId() + "_" + System.currentTimeMillis() % 100000;
             String sessionId = "sesion" + sesion.getId();
             double amount = sesion.getPrecioTotal().doubleValue();

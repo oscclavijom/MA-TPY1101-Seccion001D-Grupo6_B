@@ -37,6 +37,8 @@
         <activity android:name=".RegistroTarotistaActivity" />
         <activity android:name=".PerfilActivity" />
         <activity android:name=".PerfilTarotistaActivity" />
+        <activity android:name=".HistorialTarotistaActivity" />
+        <activity android:name=".PagosTarotistaActivity" />
         <activity android:name=".SeleccionRolActivity" />
         <activity android:name=".CompletarPerfilTarotistaActivity" />
         <activity

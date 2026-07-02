@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.conectatarot.app.network.EditarPerfilTarotistaRequest
 import com.conectatarot.app.network.RetrofitClient
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 
 class PerfilTarotistaActivity : AppCompatActivity() {
@@ -24,11 +25,15 @@ class PerfilTarotistaActivity : AppCompatActivity() {
         val btnGuardar = findViewById<Button>(R.id.btnGuardarPerfilTarotista)
         val tvResultado = findViewById<TextView>(R.id.tvResultadoPerfilTarotista)
         val tvVolver = findViewById<TextView>(R.id.tvVolverPerfilTarotista)
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
 
         // Cargar datos guardados
         etNombrePro.setText(prefs.getString("nombreProfesional", "") ?: "")
         etDescripcion.setText(prefs.getString("descripcion", "") ?: "")
         etPrecio.setText(prefs.getString("precioBase", "") ?: "")
+
+        setupTarotistaBottomNavigation(bottomNav)
+        bottomNav.selectedItemId = R.id.nav_perfil
 
         tvVolver.setOnClickListener { finish() }
 

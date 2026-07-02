@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.conectatarot.app.network.RetrofitClient
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 
 class TarotistaHomeActivity : AppCompatActivity() {
@@ -24,8 +25,12 @@ class TarotistaHomeActivity : AppCompatActivity() {
         val rvAgenda = findViewById<RecyclerView>(R.id.rvAgenda)
         val tvEmpty = findViewById<TextView>(R.id.tvEmptyAgenda)
         val tvCerrar = findViewById<TextView>(R.id.tvCerrarSesionTarotista)
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
 
         rvAgenda.layoutManager = LinearLayoutManager(this)
+
+        setupTarotistaBottomNavigation(bottomNav)
+        bottomNav.selectedItemId = R.id.nav_agenda
 
         tvCerrar.setOnClickListener {
             getSharedPreferences("conectatarot", MODE_PRIVATE).edit().clear().apply()

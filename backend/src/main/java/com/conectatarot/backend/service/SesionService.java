@@ -61,6 +61,10 @@ public class SesionService {
             throw new RuntimeException("Horario fuera de disponibilidad del tarotista");
         }
 
+        if (!esSesionFutura(request.getFecha())) {
+            throw new RuntimeException("No es posible reservar una sesión en una fecha u hora pasada");
+        }
+
         validarSolapamiento(
                 tarotista.getId(),
                 request.getFecha(),
@@ -173,6 +177,10 @@ public class SesionService {
             throw new RuntimeException("Solo se pueden confirmar sesiones pendientes");
         }
 
+        if (!esSesionFutura(sesion.getFecha())) {
+            throw new RuntimeException("No es posible confirmar una sesión cuyo horario ya pasó");
+        }
+
         sesion.setEstado("CONFIRMADA");
 
         return convertirADTO(sesionRepository.save(sesion));
@@ -262,6 +270,10 @@ public class SesionService {
         if (!sesion.getTarotista().getUsuario().getEmail().equals(email)) {
             throw new RuntimeException("No tienes permiso para modificar esta sesión");
         }
+    }
+
+    private boolean esSesionFutura(LocalDateTime fechaSesion) {
+        return fechaSesion.isAfter(LocalDateTime.now());
     }
 
     private SesionResponseDTO convertirADTO(Sesion sesion) {

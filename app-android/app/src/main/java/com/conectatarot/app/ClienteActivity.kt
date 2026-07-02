@@ -47,19 +47,19 @@ class ClienteActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_sesiones -> {
                     startActivity(Intent(this, MisSesionesActivity::class.java))
-                    false
+                    true
                 }
                 R.id.nav_historial -> {
                     startActivity(Intent(this, HistorialSesionesActivity::class.java))
-                    false
+                    true
                 }
                 R.id.nav_pagos -> {
                     startActivity(Intent(this, HistorialPagosActivity::class.java))
-                    false
+                    true
                 }
                 R.id.nav_perfil -> {
                     startActivity(Intent(this, PerfilActivity::class.java))
-                    false
+                    true
                 }
                 else -> true
             }

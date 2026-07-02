@@ -90,7 +90,7 @@
             android:id="@+id/tvVideollamadaInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="📹 La videollamada estará disponible 15 min antes de tu sesión"
+            android:text="📹 La videollamada estará disponible a la hora exacta de tu sesión"
             android:textColor="#9b59b6"
             android:textSize="12sp"
             android:gravity="center"
