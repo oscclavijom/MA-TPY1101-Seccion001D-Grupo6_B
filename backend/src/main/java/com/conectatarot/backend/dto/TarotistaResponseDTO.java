@@ -16,4 +16,5 @@ public class TarotistaResponseDTO {
     private BigDecimal precioBase;
     private String estado;
     private List<String> especialidades;
+    private List<DisponibilidadResponseDTO> disponibilidades;
 }

@@ -43,6 +43,7 @@ class TarotistaAdapter(private val tarotistas: List<Tarotista>) :
                     ArrayList(t.especialidades ?: emptyList())
                 )
                 putExtra("tarotistaId", t.id)
+                putExtra("disponibilidades", ArrayList(t.disponibilidades ?: emptyList()))
             }
             context.startActivity(intent)
         }

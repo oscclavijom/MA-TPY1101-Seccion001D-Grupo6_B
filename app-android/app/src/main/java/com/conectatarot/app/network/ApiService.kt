@@ -203,7 +203,8 @@ data class Tarotista(
     val descripcion: String?,
     val precioBase: Double?,
     val estado: String?,
-    val especialidades: List<String>?
+    val especialidades: List<String>?,
+    val disponibilidades: List<Disponibilidad>?
 )
 
 data class TarotistasResponse(
@@ -297,6 +298,12 @@ data class EditarPerfilTarotistaRequest(
     val nombreProfesional: String,
     val descripcion: String,
     val precioBase: Double
+)
+
+data class Disponibilidad(
+    val diaSemana: String,
+    val horaInicio: String,
+    val horaFin: String
 )
 
 data class ResenaRequest(

@@ -1,7 +1,9 @@
 package com.conectatarot.backend.service;
 
+import com.conectatarot.backend.dto.DisponibilidadResponseDTO;
 import com.conectatarot.backend.dto.RegistroTarotistaRequest;
 import com.conectatarot.backend.dto.TarotistaResponseDTO;
+import com.conectatarot.backend.entity.DisponibilidadTarotista;
 import com.conectatarot.backend.entity.Tarotista;
 import com.conectatarot.backend.entity.Usuario;
 import com.conectatarot.backend.repository.RolRepository;
@@ -125,6 +127,24 @@ public class TarotistaService {
     }
 
     private TarotistaResponseDTO convertirADTO(Tarotista tarotista) {
+        List<DisponibilidadTarotista> disponibilidades = 
+                disponibilidadTarotistaService.getDisponibilidadesByTarotistaId(tarotista.getId());
+
+        List<DisponibilidadResponseDTO> disponibilidadesDTO = disponibilidades.stream()
+                .map(d -> DisponibilidadResponseDTO.builder()
+                        .diaSemana(d.getDiaSemana())
+                        .horaInicio(d.getHoraInicio().toString())
+                        .horaFin(d.getHoraFin().toString())
+                        .build())
+                .sorted((d1, d2) -> {
+                    String ordenDias = "MONDAY,TUESDAY,WEDNESDAY,THURSDAY,FRIDAY,SATURDAY,SUNDAY";
+                    return Integer.compare(
+                            ordenDias.indexOf(d1.getDiaSemana()),
+                            ordenDias.indexOf(d2.getDiaSemana())
+                    );
+                })
+                .toList();
+
         return TarotistaResponseDTO.builder()
                 .id(tarotista.getId())
                 .nombreProfesional(tarotista.getNombreProfesional())
@@ -137,6 +157,7 @@ public class TarotistaService {
                                 .map(relacion -> relacion.getEspecialidad().getNombre())
                                 .toList()
                 )
+                .disponibilidades(disponibilidadesDTO)
                 .build();
     }
 

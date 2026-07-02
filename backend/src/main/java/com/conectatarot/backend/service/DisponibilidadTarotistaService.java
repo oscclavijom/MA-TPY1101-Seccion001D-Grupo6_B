@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -46,4 +47,8 @@ public class DisponibilidadTarotistaService {
 
         repository.save(disponibilidad);
         }
+
+    public List<DisponibilidadTarotista> getDisponibilidadesByTarotistaId(Integer tarotistaId) {
+        return repository.findByTarotistaIdAndActivaTrue(tarotistaId);
+    }
 }
