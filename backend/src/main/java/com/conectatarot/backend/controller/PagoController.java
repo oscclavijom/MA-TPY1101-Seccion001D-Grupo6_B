@@ -21,7 +21,7 @@ public class PagoController {
 
     private final SesionRepository sesionRepository;
 
-    @Value("${app.frontend-url:https://ma-tpy1101-seccion001d-grupo6-production-8073.up.railway.app}")
+    @Value("${app.frontend-url:https://ma-tpy1101-seccion001d-grupo6b-production.up.railway.app/}")
     private String backendUrl;
 
     public PagoController(SesionRepository sesionRepository) {
