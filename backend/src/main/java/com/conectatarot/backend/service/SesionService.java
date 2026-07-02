@@ -116,6 +116,27 @@ public class SesionService {
                 .collect(Collectors.toList());
     }
 
+    public List<SesionResponseDTO> obtenerPagosTarotistaHistorial(String email) {
+        return sesionRepository.findByTarotista_Usuario_EmailOrderByFechaAsc(email)
+                .stream()
+                .filter(s -> "PAGADO".equals(s.getEstadoPago()))
+                .map(this::convertirADTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<SesionResponseDTO> obtenerSesionesTarotistaHistorial(String email) {
+        return sesionRepository.findByTarotista_Usuario_EmailOrderByFechaAsc(email)
+                .stream()
+                .filter(s -> {
+                    LocalDateTime finSesion = s.getFecha().plusMinutes(s.getDuracionMinutos());
+                    return !finSesion.isAfter(LocalDateTime.now()) ||
+                           s.getEstado().equals("CANCELADA") ||
+                           s.getEstado().equals("RECHAZADA");
+                })
+                .map(this::convertirADTO)
+                .collect(Collectors.toList());
+    }
+
     public List<SesionResponseDTO> obtenerSesionesTarotista(String email) {
         return sesionRepository.findByTarotista_Usuario_EmailOrderByFechaAsc(email)
                 .stream()

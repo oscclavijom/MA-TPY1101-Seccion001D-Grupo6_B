@@ -38,6 +38,16 @@ interface ApiService {
         @Header("Authorization") token: String
     ): Response<SesionClienteResponse>
 
+    @GET("api/sesiones/tarotista/historial")
+    suspend fun getSesionesTarotistaHistorial(
+        @Header("Authorization") token: String
+    ): Response<SesionClienteResponse>
+
+    @GET("api/sesiones/tarotista/pagos")
+    suspend fun getPagosTarotistaHistorial(
+        @Header("Authorization") token: String
+    ): Response<SesionClienteResponse>
+
     @PUT("api/sesiones/{id}/cancelar")
     suspend fun cancelarSesion(
         @Header("Authorization") token: String,

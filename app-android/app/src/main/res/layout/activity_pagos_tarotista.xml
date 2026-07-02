@@ -12,17 +12,28 @@
         android:textColor="#d4aaff"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:padding="16dp"/>
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="12dp"/>
 
     <TextView
+        android:id="@+id/tvEmptyPagosTarotista"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="Próximamente..."
+        android:text="No tienes pagos registrados"
         android:textColor="#9b59b6"
         android:textSize="16sp"
         android:layout_gravity="center"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:visibility="gone"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPagosTarotista"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"

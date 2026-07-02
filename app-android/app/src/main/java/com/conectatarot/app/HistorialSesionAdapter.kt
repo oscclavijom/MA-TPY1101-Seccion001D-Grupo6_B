@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.conectatarot.app.network.SesionItem
 
 class HistorialSesionAdapter(
-    private val sesiones: List<SesionItem>
+    private val sesiones: List<SesionItem>,
+    private val isTarotistaView: Boolean = false
 ) : RecyclerView.Adapter<HistorialSesionAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -27,7 +28,8 @@ class HistorialSesionAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val s = sesiones[position]
-        holder.tvTarotista.text = "🌙 ${s.nombreTarotista}"
+        val nombre = if (isTarotistaView) s.nombreCliente else s.nombreTarotista
+        holder.tvTarotista.text = "🌙 ${nombre ?: "N/A"}"
         holder.tvFecha.text = "📅 ${s.fecha.take(16).replace("T", " ")}"
         holder.tvEspecialidad.text = "🔮 ${s.especialidad}"
         holder.tvPrecio.text = "$ ${s.precioTotal.toInt()}"

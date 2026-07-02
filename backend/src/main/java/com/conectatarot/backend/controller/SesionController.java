@@ -71,6 +71,30 @@ public class SesionController {
         );
     }
 
+    @GetMapping("/tarotista/historial")
+    public ResponseEntity<ApiResponse<List<SesionResponseDTO>>> obtenerSesionesTarotistaHistorial(
+            Authentication authentication
+    ) {
+        List<SesionResponseDTO> sesiones =
+                sesionService.obtenerSesionesTarotistaHistorial(authentication.getName());
+
+        return ResponseEntity.ok(
+                ApiResponse.ok("Historial de sesiones del tarotista obtenido correctamente", sesiones)
+        );
+    }
+
+    @GetMapping("/tarotista/pagos")
+    public ResponseEntity<ApiResponse<List<SesionResponseDTO>>> obtenerPagosTarotistaHistorial(
+            Authentication authentication
+    ) {
+        List<SesionResponseDTO> pagos =
+                sesionService.obtenerPagosTarotistaHistorial(authentication.getName());
+
+        return ResponseEntity.ok(
+                ApiResponse.ok("Historial de pagos del tarotista obtenido correctamente", pagos)
+        );
+    }
+
     @GetMapping("/tarotista")
     public ResponseEntity<ApiResponse<PageResponse<SesionResponseDTO>>> obtenerSesionesTarotista(
             Authentication authentication,

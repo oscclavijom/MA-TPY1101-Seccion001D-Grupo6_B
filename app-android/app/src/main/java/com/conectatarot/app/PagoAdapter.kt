@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.conectatarot.app.network.SesionItem
 
 class PagoAdapter(
-    private val pagos: List<SesionItem>
+    private val pagos: List<SesionItem>,
+    private val isTarotistaView: Boolean = false
 ) : RecyclerView.Adapter<PagoAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -27,7 +28,8 @@ class PagoAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val p = pagos[position]
-        holder.tvTarotista.text = "🌙 ${p.nombreTarotista}"
+        val nombre = if (isTarotistaView) p.nombreCliente else p.nombreTarotista
+        holder.tvTarotista.text = "🌙 ${nombre ?: "N/A"}"
         holder.tvFecha.text = "📅 ${p.fecha.take(16).replace("T", " ")}"
         holder.tvEspecialidad.text = "🔮 ${p.especialidad}"
         holder.tvMonto.text = "$ ${p.precioTotal.toInt()}"
