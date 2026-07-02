@@ -162,8 +162,8 @@ class PerfilTarotistaActivity : AppCompatActivity() {
                             nombrePro,
                             descripcion,
                             precio,
-                            if (especialidades.isNotEmpty()) especialidades else null,
-                            if (disponibilidades.isNotEmpty()) disponibilidades else null
+                            especialidades,
+                            disponibilidades
                         )
                     )
                     if (response.isSuccessful) {

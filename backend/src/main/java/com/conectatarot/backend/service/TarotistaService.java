@@ -104,11 +104,11 @@ public class TarotistaService {
         tarotista.setDescripcion(descripcion);
         tarotista.setPrecioBase(precioBase);
 
-        if (especialidades != null && !especialidades.isEmpty()) {
+        if (especialidades != null) {
             tarotistaEspecialidadService.reemplazarEspecialidades(tarotistaId, especialidades);
         }
 
-        if (disponibilidades != null && !disponibilidades.isEmpty()) {
+        if (disponibilidades != null) {
             disponibilidadTarotistaService.reemplazarDisponibilidades(tarotistaId, disponibilidades);
         }
 
