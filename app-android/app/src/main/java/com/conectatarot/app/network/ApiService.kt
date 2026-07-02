@@ -304,7 +304,7 @@ data class Disponibilidad(
     val diaSemana: String,
     val horaInicio: String,
     val horaFin: String
-)
+) : java.io.Serializable
 
 data class ResenaRequest(
     val sesionId: Int,
