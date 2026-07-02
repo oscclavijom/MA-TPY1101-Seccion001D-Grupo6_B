@@ -86,14 +86,29 @@ public class TarotistaController {
             @Valid @RequestBody PerfilTarotistaDTO request,
             Authentication authentication
     ) {
-        Tarotista tarotista = tarotistaService.actualizarPerfilCompleto(
+        Tarotista tarotista = tarotistaService.actualizarPerfil(
                 id,
                 authentication.getName(),
                 request.getNombreProfesional(),
                 request.getDescripcion(),
-                request.getPrecioBase(),
-                request.getEspecialidades(),
-                request.getDisponibilidades()
+                request.getPrecioBase()
+        );
+
+        return ResponseEntity.ok(
+                ApiResponse.ok("Perfil actualizado correctamente", tarotista)
+        );
+    }
+
+    @PutMapping("/mi-perfil")
+    public ResponseEntity<ApiResponse<Tarotista>> actualizarMiPerfil(
+            @Valid @RequestBody PerfilTarotistaDTO request,
+            Authentication authentication
+    ) {
+        Tarotista tarotista = tarotistaService.actualizarMiPerfil(
+                authentication.getName(),
+                request.getNombreProfesional(),
+                request.getDescripcion(),
+                request.getPrecioBase()
         );
 
         return ResponseEntity.ok(
@@ -117,7 +132,7 @@ public class TarotistaController {
         String email = (String) body.get("email");
 
         Tarotista tarotista = tarotistaService.crearTarotista(usuarioId, nombreProfesional);
-        tarotista = tarotistaService.actualizarPerfil(tarotista.getId(), email, descripcion, precioBase);
+        tarotista = tarotistaService.actualizarPerfil(tarotista.getId(), email, nombreProfesional, descripcion, precioBase);
 
         var usuario = usuarioRepository.findById(usuarioId).orElseThrow();
         usuario.setRol(rolRepository.findByNombreRol("TAROTISTA").orElseThrow());

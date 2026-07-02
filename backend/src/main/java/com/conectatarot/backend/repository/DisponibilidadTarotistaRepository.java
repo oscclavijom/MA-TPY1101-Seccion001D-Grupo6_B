@@ -9,6 +9,4 @@ public interface DisponibilidadTarotistaRepository extends JpaRepository<Disponi
 
     List<DisponibilidadTarotista> findByTarotistaIdAndActivaTrue(Integer tarotistaId);
 
-    List<DisponibilidadTarotista> findByTarotistaId(Integer tarotistaId);
-
 }

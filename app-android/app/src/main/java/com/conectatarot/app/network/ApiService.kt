@@ -98,6 +98,12 @@ interface ApiService {
         @Body request: EditarPerfilTarotistaRequest
     ): Response<Any>
 
+    @PUT("api/tarotistas/mi-perfil")
+    suspend fun editarMiPerfilTarotista(
+        @Header("Authorization") token: String,
+        @Body request: EditarPerfilTarotistaRequest
+    ): Response<Any>
+
     @POST("api/resenas")
     suspend fun crearResena(@Body request: ResenaRequest): Response<Any>
 
@@ -290,9 +296,7 @@ data class EditarPerfilRequest(
 data class EditarPerfilTarotistaRequest(
     val nombreProfesional: String,
     val descripcion: String,
-    val precioBase: Double,
-    val especialidades: List<Int>? = null,
-    val disponibilidades: List<DisponibilidadRequest>? = null
+    val precioBase: Double
 )
 
 data class ResenaRequest(

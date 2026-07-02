@@ -1,6 +1,5 @@
 package com.conectatarot.backend.service;
 
-import com.conectatarot.backend.dto.DisponibilidadRequestDTO;
 import com.conectatarot.backend.dto.RegistroTarotistaRequest;
 import com.conectatarot.backend.dto.TarotistaResponseDTO;
 import com.conectatarot.backend.entity.Tarotista;
@@ -48,38 +47,9 @@ public class TarotistaService {
     public Tarotista actualizarPerfil(
             Integer tarotistaId,
             String emailUsuarioLogueado,
-            String descripcion,
-            BigDecimal precioBase
-    ) {
-        Tarotista tarotista = tarotistaRepository.findById(tarotistaId)
-                .orElseThrow(() -> new RuntimeException("Tarotista no encontrado"));
-
-        if (!tarotista.getUsuario().getEmail().equals(emailUsuarioLogueado)) {
-            throw new RuntimeException("No tienes permiso para editar este perfil");
-        }
-
-        if (descripcion == null || descripcion.length() < 20) {
-            throw new RuntimeException("La descripción debe tener al menos 20 caracteres");
-        }
-
-        if (precioBase == null || precioBase.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new RuntimeException("El precio base debe ser mayor a 0");
-        }
-
-        tarotista.setDescripcion(descripcion);
-        tarotista.setPrecioBase(precioBase);
-
-        return tarotistaRepository.save(tarotista);
-    }
-
-    public Tarotista actualizarPerfilCompleto(
-            Integer tarotistaId,
-            String emailUsuarioLogueado,
             String nombreProfesional,
             String descripcion,
-            BigDecimal precioBase,
-            List<Integer> especialidades,
-            List<DisponibilidadRequestDTO> disponibilidades
+            BigDecimal precioBase
     ) {
         Tarotista tarotista = tarotistaRepository.findById(tarotistaId)
                 .orElseThrow(() -> new RuntimeException("Tarotista no encontrado"));
@@ -104,13 +74,33 @@ public class TarotistaService {
         tarotista.setDescripcion(descripcion);
         tarotista.setPrecioBase(precioBase);
 
-        if (especialidades != null) {
-            tarotistaEspecialidadService.reemplazarEspecialidades(tarotistaId, especialidades);
+        return tarotistaRepository.save(tarotista);
+    }
+
+    public Tarotista actualizarMiPerfil(
+            String emailUsuarioLogueado,
+            String nombreProfesional,
+            String descripcion,
+            BigDecimal precioBase
+    ) {
+        Tarotista tarotista = tarotistaRepository.findByUsuario_Email(emailUsuarioLogueado)
+                .orElseThrow(() -> new RuntimeException("Tarotista no encontrado"));
+
+        if (nombreProfesional == null || nombreProfesional.isBlank()) {
+            throw new RuntimeException("El nombre profesional es obligatorio");
         }
 
-        if (disponibilidades != null) {
-            disponibilidadTarotistaService.reemplazarDisponibilidades(tarotistaId, disponibilidades);
+        if (descripcion == null || descripcion.length() < 20) {
+            throw new RuntimeException("La descripción debe tener al menos 20 caracteres");
         }
+
+        if (precioBase == null || precioBase.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new RuntimeException("El precio base debe ser mayor a 0");
+        }
+
+        tarotista.setNombreProfesional(nombreProfesional);
+        tarotista.setDescripcion(descripcion);
+        tarotista.setPrecioBase(precioBase);
 
         return tarotistaRepository.save(tarotista);
     }
@@ -167,6 +157,7 @@ public class TarotistaService {
         actualizarPerfil(
                 tarotista.getId(),
                 usuario.getEmail(),
+                request.getNombreProfesional(),
                 request.getDescripcion(),
                 request.getPrecioBase()
         );

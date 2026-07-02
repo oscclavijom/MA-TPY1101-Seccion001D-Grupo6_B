@@ -74,27 +74,6 @@ public class TarotistaEspecialidadService {
                 .toList();
     }
 
-    @Transactional
-    public void reemplazarEspecialidades(Integer tarotistaId, List<Integer> nuevasEspecialidades) {
-        Tarotista tarotista = tarotistaRepository.findById(tarotistaId)
-                .orElseThrow(() -> new RuntimeException("Tarotista no encontrado"));
-
-        List<TarotistaEspecialidad> existentes = repository.findByTarotista_Id(tarotistaId);
-        repository.deleteAll(existentes);
-
-        for (Integer especialidadId : nuevasEspecialidades) {
-            Especialidad especialidad = especialidadRepository.findById(especialidadId)
-                    .orElseThrow(() -> new RuntimeException("Especialidad no encontrada"));
-
-            TarotistaEspecialidad relacion = TarotistaEspecialidad.builder()
-                    .tarotista(tarotista)
-                    .especialidad(especialidad)
-                    .build();
-
-            repository.save(relacion);
-        }
-    }
-
     private TarotistaEspecialidadResponseDTO convertirADTO(TarotistaEspecialidad relacion) {
         return TarotistaEspecialidadResponseDTO.builder()
                 .id(relacion.getId())

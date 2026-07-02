@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Getter
 @Setter
@@ -22,8 +21,4 @@ public class PerfilTarotistaDTO {
 
     @DecimalMin(value = "1.0", message = "El precio base debe ser mayor a 0")
     private BigDecimal precioBase;
-
-    private List<Integer> especialidades;
-
-    private List<DisponibilidadRequestDTO> disponibilidades;
 }

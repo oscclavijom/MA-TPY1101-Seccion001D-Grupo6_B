@@ -17,4 +17,6 @@ public interface TarotistaRepository extends JpaRepository<Tarotista, Integer> {
             String estado,
             String especialidad
     );
+
+    java.util.Optional<Tarotista> findByUsuario_Email(String email);
 }
