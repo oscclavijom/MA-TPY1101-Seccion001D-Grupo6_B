@@ -19,4 +19,11 @@ public interface TarotistaRepository extends JpaRepository<Tarotista, Integer> {
     );
 
     java.util.Optional<Tarotista> findByUsuario_Email(String email);
+
+    List<Tarotista> findByEstadoIgnoreCaseAndUsuario_ActivoTrue(String estado);
+
+    List<Tarotista> findByEstadoIgnoreCaseAndUsuario_ActivoTrueAndTarotistaEspecialidades_Especialidad_NombreContainingIgnoreCase(
+            String estado,
+            String especialidad
+    );
 }

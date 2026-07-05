@@ -37,3 +37,10 @@ fun sesionCompletada(sesion: SesionItem): Boolean {
         fin.isBefore(java.time.LocalDateTime.now())
     } catch (e: Exception) { false }
 }
+
+fun sesionNoComenzada(sesion: SesionItem): Boolean {
+    return try {
+        val fechaSesion = java.time.LocalDateTime.parse(sesion.fecha)
+        fechaSesion.isAfter(java.time.LocalDateTime.now())
+    } catch (e: Exception) { false }
+}

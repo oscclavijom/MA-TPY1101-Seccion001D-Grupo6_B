@@ -52,7 +52,8 @@ class SesionAdapter(
         holder.tvEstado.setTextColor(android.graphics.Color.parseColor(color))
 
         when {
-            s.estado == "PENDIENTE" && s.estadoPago != "PAGADO" -> {
+            s.estado == "PENDIENTE" && s.estadoPago != "PAGADO" && 
+            com.conectatarot.app.sesionNoComenzada(s) -> {
                 holder.btnCancelar.visibility = View.VISIBLE
                 holder.btnCancelar.text = "Cancelar sesión"
                 holder.btnCancelar.setBackgroundColor(android.graphics.Color.parseColor("#e74c3c"))
@@ -69,6 +70,17 @@ class SesionAdapter(
                 holder.btnCancelar.setBackgroundColor(android.graphics.Color.parseColor("#e74c3c"))
                 holder.btnCancelar.setOnClickListener { onCancelar(s) }
                 holder.btnPagar.visibility = View.GONE
+            }
+
+            s.estado == "CONFIRMADA" && s.estadoPago != "PAGADO" && 
+            com.conectatarot.app.sesionNoComenzada(s) -> {
+                holder.btnCancelar.visibility = View.VISIBLE
+                holder.btnCancelar.text = "Cancelar sesión"
+                holder.btnCancelar.setBackgroundColor(android.graphics.Color.parseColor("#e74c3c"))
+                holder.btnCancelar.setOnClickListener { onCancelar(s) }
+
+                holder.btnPagar.visibility = View.VISIBLE
+                holder.btnPagar.setOnClickListener { onPagar(s) }
             }
 
             com.conectatarot.app.sesionCompletada(s) -> {

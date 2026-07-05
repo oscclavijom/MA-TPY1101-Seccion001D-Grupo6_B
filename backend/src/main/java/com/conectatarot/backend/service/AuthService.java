@@ -4,6 +4,7 @@ import com.conectatarot.backend.dto.LoginRequestDTO;
 import com.conectatarot.backend.dto.LoginResponseDTO;
 import com.conectatarot.backend.entity.Usuario;
 import com.conectatarot.backend.exception.ForbiddenException;
+import com.conectatarot.backend.repository.TarotistaRepository;
 import com.conectatarot.backend.repository.UsuarioRepository;
 import com.conectatarot.backend.security.JwtService;
 
@@ -16,15 +17,18 @@ public class AuthService {
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final TarotistaRepository tarotistaRepository;
 
     public AuthService(
             UsuarioRepository usuarioRepository,
             PasswordEncoder passwordEncoder,
-            JwtService jwtService
+            JwtService jwtService,
+            TarotistaRepository tarotistaRepository
     ) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
+        this.tarotistaRepository = tarotistaRepository;
     }
 
     public LoginResponseDTO login(
@@ -48,6 +52,24 @@ public class AuthService {
             throw new ForbiddenException(
                     "Tu cuenta ha sido bloqueada por un administrador"
             );
+        }
+
+        if ("TAROTISTA".equals(usuario.getRol().getNombreRol())) {
+            tarotistaRepository.findByUsuario_IdUsuario(usuario.getIdUsuario())
+                    .ifPresentOrElse(
+                            tarotista -> {
+                                if (!"APROBADO".equals(tarotista.getEstado())) {
+                                    throw new ForbiddenException(
+                                            "Tu cuenta de tarotista aún no ha sido aprobada por un administrador"
+                                    );
+                                }
+                            },
+                            () -> {
+                                throw new ForbiddenException(
+                                        "No se encontró el registro de tarotista asociado a tu cuenta"
+                                );
+                            }
+                    );
         }
 
         String token = jwtService.generateToken(

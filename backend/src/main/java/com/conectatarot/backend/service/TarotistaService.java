@@ -113,12 +113,12 @@ public class TarotistaService {
 
         if (especialidad != null && !especialidad.isBlank()) {
             tarotistas = tarotistaRepository
-                    .findByEstadoIgnoreCaseAndTarotistaEspecialidades_Especialidad_NombreContainingIgnoreCase(
+                    .findByEstadoIgnoreCaseAndUsuario_ActivoTrueAndTarotistaEspecialidades_Especialidad_NombreContainingIgnoreCase(
                             "APROBADO",
                             especialidad
                     );
         } else {
-            tarotistas = tarotistaRepository.findByEstadoIgnoreCase("APROBADO");
+            tarotistas = tarotistaRepository.findByEstadoIgnoreCaseAndUsuario_ActivoTrue("APROBADO");
         }
 
         return tarotistas.stream()
