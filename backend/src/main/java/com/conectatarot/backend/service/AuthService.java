@@ -55,7 +55,7 @@ public class AuthService {
         }
 
         if ("TAROTISTA".equals(usuario.getRol().getNombreRol())) {
-            tarotistaRepository.findByUsuario_IdUsuario(usuario.getIdUsuario())
+            tarotistaRepository.findByUsuario_Email(usuario.getEmail())
                     .ifPresentOrElse(
                             tarotista -> {
                                 if (!"APROBADO".equals(tarotista.getEstado())) {
