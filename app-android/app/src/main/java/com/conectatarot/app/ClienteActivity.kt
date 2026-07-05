@@ -30,9 +30,7 @@ class ClienteActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tvBienvenido).text = "Hola, $nombre 👋"
 
         findViewById<TextView>(R.id.tvLogout).setOnClickListener {
-            getSharedPreferences("conectatarot", MODE_PRIVATE).edit().clear().apply()
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
+            logout()
         }
 
         val rv = findViewById<RecyclerView>(R.id.rvTarotistas)

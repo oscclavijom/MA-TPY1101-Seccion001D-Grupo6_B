@@ -26,7 +26,7 @@
             android:id="@+id/tvCerrarSesionTarotista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Salir"
+            android:text="Cerrar sesión"
             android:textColor="#e74c3c"
             android:textSize="14sp"/>
 
@@ -52,18 +52,6 @@
         android:layout_gravity="center"
         android:layout_marginTop="60dp"
         android:visibility="gone"/>
-
-    <Button
-        android:id="@+id/btnEditarPerfilTarotista"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:text="✏️ Editar mi perfil"
-        android:textColor="#ffffff"
-        android:backgroundTint="#2d1654"
-        android:textSize="14sp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvAgenda"

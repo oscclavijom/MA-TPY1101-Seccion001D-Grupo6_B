@@ -99,6 +99,15 @@ public class TarotistaController {
         );
     }
 
+    @GetMapping("/mi-perfil")
+    public ResponseEntity<TarotistaResponseDTO> obtenerMiPerfil(
+            Authentication authentication
+    ) {
+        Tarotista tarotista = tarotistaService.obtenerPorEmailUsuario(authentication.getName());
+        TarotistaResponseDTO dto = tarotistaService.convertirADTO(tarotista);
+        return ResponseEntity.ok(dto);
+    }
+
     @PutMapping("/mi-perfil")
     public ResponseEntity<ApiResponse<Tarotista>> actualizarMiPerfil(
             @Valid @RequestBody PerfilTarotistaDTO request,

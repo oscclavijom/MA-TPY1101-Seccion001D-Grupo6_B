@@ -16,15 +16,6 @@
         android:textStyle="bold"
         android:padding="16dp"/>
 
-    <TextView
-        android:id="@+id/tvLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Cerrar sesión"
-        android:textColor="#ff6666"
-        android:textSize="16sp"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPagos"
         android:layout_width="match_parent"

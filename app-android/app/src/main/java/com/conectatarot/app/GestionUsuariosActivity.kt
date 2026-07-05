@@ -52,28 +52,6 @@ class GestionUsuariosActivity : AppCompatActivity() {
             return
         }
 
-        val tvLogout =
-            findViewById<TextView>(R.id.tvLogout)
-
-        tvLogout.setOnClickListener {
-
-            prefs.edit().clear().apply()
-
-            val intent =
-                Intent(
-                    this,
-                    MainActivity::class.java
-                )
-
-            intent.flags =
-                Intent.FLAG_ACTIVITY_NEW_TASK or
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK
-
-            startActivity(intent)
-
-            finish()
-        }
-
         val bottomNav =
             findViewById<BottomNavigationView>(R.id.bottomNav)
 

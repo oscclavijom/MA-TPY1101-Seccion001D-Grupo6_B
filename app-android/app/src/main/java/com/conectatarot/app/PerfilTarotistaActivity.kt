@@ -26,15 +26,43 @@ class PerfilTarotistaActivity : AppCompatActivity() {
         val tvVolver = findViewById<TextView>(R.id.tvVolverPerfilTarotista)
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
 
-        // Cargar datos guardados
-        etNombrePro.setText(prefs.getString("nombreProfesional", "") ?: "")
-        etDescripcion.setText(prefs.getString("descripcion", "") ?: "")
-        etPrecio.setText(prefs.getString("precioBase", "") ?: "")
-
         setupTarotistaBottomNavigation(bottomNav)
         bottomNav.selectedItemId = R.id.nav_perfil
 
         tvVolver.setOnClickListener { finish() }
+
+        // Cargar datos desde SharedPreferences primero
+        val nombreProGuardado = prefs.getString("nombreProfesional", "") ?: ""
+        val descripcionGuardada = prefs.getString("descripcion", "") ?: ""
+        val precioGuardado = prefs.getString("precioBase", "") ?: ""
+
+        etNombrePro.setText(nombreProGuardado)
+        etDescripcion.setText(descripcionGuardada)
+        etPrecio.setText(precioGuardado)
+
+        // Si SharedPreferences está vacío, cargar desde backend
+        if (nombreProGuardado.isEmpty() || descripcionGuardada.isEmpty() || precioGuardado.isEmpty()) {
+            lifecycleScope.launch {
+                try {
+                    val response = RetrofitClient.instance.obtenerMiPerfilTarotista("Bearer $token")
+                    if (response.isSuccessful && response.body() != null) {
+                        val perfil = response.body()!!
+                        etNombrePro.setText(perfil.nombreProfesional)
+                        etDescripcion.setText(perfil.descripcion ?: "")
+                        etPrecio.setText(perfil.precioBase?.toString() ?: "")
+                        
+                        // Guardar en SharedPreferences para futuros usos
+                        prefs.edit()
+                            .putString("nombreProfesional", perfil.nombreProfesional)
+                            .putString("descripcion", perfil.descripcion ?: "")
+                            .putString("precioBase", perfil.precioBase?.toString() ?: "")
+                            .apply()
+                    }
+                } catch (e: Exception) {
+                    // Silencioso: mantener valores de SharedPreferences si falla backend
+                }
+            }
+        }
 
         btnGuardar.setOnClickListener {
             val nombrePro = etNombrePro.text.toString().trim()

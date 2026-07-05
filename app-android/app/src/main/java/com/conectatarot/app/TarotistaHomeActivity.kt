@@ -33,15 +33,9 @@ class TarotistaHomeActivity : AppCompatActivity() {
         bottomNav.selectedItemId = R.id.nav_agenda
 
         tvCerrar.setOnClickListener {
-            getSharedPreferences("conectatarot", MODE_PRIVATE).edit().clear().apply()
-            startActivity(android.content.Intent(this, MainActivity::class.java))
-            finish()
+            logout()
         }
         cargarSesiones(token, rvAgenda, tvEmpty)
-
-        findViewById<android.widget.Button>(R.id.btnEditarPerfilTarotista).setOnClickListener {
-            startActivity(android.content.Intent(this, PerfilTarotistaActivity::class.java))
-        }
     }
 
     private fun cargarSesiones(token: String, rv: RecyclerView, tvEmpty: TextView) {
@@ -52,7 +46,7 @@ class TarotistaHomeActivity : AppCompatActivity() {
                     val sesiones = response.body()!!.data?.content ?: emptyList()
                     if (sesiones.isEmpty()) {
                         tvEmpty.visibility = android.view.View.VISIBLE
-                        rv.visibility = android.view.View.GONE
+                        rv.visibility = android.view.View.INVISIBLE
                     } else {
                         tvEmpty.visibility = android.view.View.GONE
                         rv.visibility = android.view.View.VISIBLE

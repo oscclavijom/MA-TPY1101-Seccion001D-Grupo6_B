@@ -104,6 +104,11 @@ interface ApiService {
         @Body request: EditarPerfilTarotistaRequest
     ): Response<Any>
 
+    @GET("api/tarotistas/mi-perfil")
+    suspend fun obtenerMiPerfilTarotista(
+        @Header("Authorization") token: String
+    ): Response<Tarotista>
+
     @POST("api/resenas")
     suspend fun crearResena(@Body request: ResenaRequest): Response<Any>
 

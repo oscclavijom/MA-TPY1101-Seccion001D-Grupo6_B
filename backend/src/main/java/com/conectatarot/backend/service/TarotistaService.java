@@ -107,6 +107,11 @@ public class TarotistaService {
         return tarotistaRepository.save(tarotista);
     }
 
+    public Tarotista obtenerPorEmailUsuario(String email) {
+        return tarotistaRepository.findByUsuario_Email(email)
+                .orElseThrow(() -> new RuntimeException("Tarotista no encontrado"));
+    }
+
     public List<TarotistaResponseDTO> buscarTarotistas(String especialidad) {
 
         List<Tarotista> tarotistas;

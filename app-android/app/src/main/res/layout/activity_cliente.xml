@@ -80,7 +80,7 @@
             android:id="@+id/tvLogout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Salir"
+            android:text="Cerrar sesión"
             android:textColor="#e74c3c"
             android:textSize="14sp"
             android:padding="8dp"/>
